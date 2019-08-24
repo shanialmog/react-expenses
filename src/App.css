@@ -1,4 +1,9 @@
 
+body {
+  margin: auto;
+  max-width: 980px;
+}
+
 h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 500;
@@ -7,10 +12,10 @@ h1 {
 
 .expense-btn {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    padding: 5px;
-    font-size: 14px;
-    margin-bottom: 5px;
-    margin-left: 10px;
+    padding: 10px;
+    height: 100%;
+    background: #efdfef;
+    border: 1px solid #efdfef;
 }
 
 .expense-item {
@@ -25,10 +30,21 @@ h1 {
     display: flex;
     padding: 10px 10px 5px 10px;
     margin: 5px 0 ;
+    justify-content: center;
 }
 
 .expense-input{
     padding: 10px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.expenses-list-item {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    border: 1px solid #efdfef;
+    padding: 10px;
+    margin: 5px 10px;
+    justify-content: space-between;
+    box-sizing: border-box;
 }
 
