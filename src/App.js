@@ -1,11 +1,12 @@
 import React, {Component} from "react"
 import './App.css'
+import moment from 'moment'
 
 class App extends React.Component {
     constructor() {
         super()
         this.state = {
-            date: Date.now(),
+            date: moment().format("MM/DD/YYYY"),
             expenseName: "",
             expenseSum: "",
             expensesList: []
@@ -23,15 +24,19 @@ class App extends React.Component {
     
     handleFormSubmit(event) {
         event.preventDefault()
+        const newDate = moment(this.state.date).format('MM/DD/YYYY')
         this.setState({
             expensesList: [
                 {
-                    date: this.state.date,
+                    date: newDate,
                     name: this.state.expenseName,
                     sum: this.state.expenseSum
                 },
                 ...this.state.expensesList
-            ]
+            ],
+            date: moment().format("MM/DD/YYYY"),
+            expenseName: "",
+            expenseSum: "",
         }) 
     }
     
