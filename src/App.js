@@ -33,7 +33,7 @@ class App extends React.Component {
                 },
                 ...this.state.expensesList
             ]
-        expensesList.sort((a, b) => (a.date > b.date) ? -1 : 1)
+        expensesList.sort((a, b) => a.date === b.date ? 0 : ((a.date > b.date) ? -1 : 1))
         this.setState({
             expensesList: expensesList,
             date: moment().format("MM/DD/YYYY"),
@@ -43,7 +43,7 @@ class App extends React.Component {
     }
     
     render() {
-        const expensesList = this.state.expensesList.map(item => 
+        const expensesList = this.state.expensesList.map(item =>
           <div className="expenses-list-item">
             <div>{item.date}</div>
             <div>{item.name}</div>
@@ -85,6 +85,11 @@ class App extends React.Component {
                         />
                     </div>
                 </form>
+                <div className="expenses-list-item">
+                        <div>Date</div>
+                        <div>Expense</div>
+                        <div>Sum</div>
+                    </div>
                 <div>{expensesList}</div>
             </div>
         )
