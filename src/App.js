@@ -25,19 +25,21 @@ class App extends React.Component {
     handleFormSubmit(event) {
         event.preventDefault()
         const newDate = moment(this.state.date).format('MM/DD/YYYY')
-        this.setState({
-            expensesList: [
+        const expensesList = [
                 {
                     date: newDate,
                     name: this.state.expenseName,
                     sum: this.state.expenseSum
                 },
                 ...this.state.expensesList
-            ],
+            ]
+        expensesList.sort((a, b) => (a.date > b.date) ? -1 : 1)
+        this.setState({
+            expensesList: expensesList,
             date: moment().format("MM/DD/YYYY"),
             expenseName: "",
             expenseSum: "",
-        }) 
+        })
     }
     
     render() {
