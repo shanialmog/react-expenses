@@ -13,6 +13,9 @@ class App extends React.Component {
         }
         this.handleFormChange = this.handleFormChange.bind(this)
         this.handleFormSubmit = this.handleFormSubmit.bind(this)
+        this.handleClickSum = this.handleClickSum.bind(this)
+        this.handleClickExpense = this.handleClickExpense.bind(this)
+        this.handleClickDate = this.handleClickDate.bind(this)
     }
     
     handleFormChange(event) {
@@ -29,7 +32,7 @@ class App extends React.Component {
                 {
                     date: newDate,
                     name: this.state.expenseName,
-                    sum: this.state.expenseSum
+                    sum: Number(this.state.expenseSum)
                 },
                 ...this.state.expensesList
             ]
@@ -41,6 +44,28 @@ class App extends React.Component {
             expenseSum: "",
         })
     }
+    
+    handleClickSum(event) {
+        const expensesList = this.state.expensesList.sort((a, b) => a.sum === b.sum ? 0 : ((a.sum > b.sum) ? -1 : 1))
+        this.setState({
+            expensesList: expensesList,
+        })
+    }
+
+    handleClickExpense(event) {
+        const expensesList = this.state.expensesList.sort((a, b) => a.name.toUpperCase() === b.name.toUpperCase() ? 0 : ((a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1))
+        this.setState({
+            expensesList: expensesList,
+        })
+    }
+
+    handleClickDate(event) {
+        const expensesList = this.state.expensesList.sort((a, b) => a.date === b.date ? 0 : ((a.date > b.date) ? -1 : 1))
+        this.setState({
+            expensesList: expensesList,
+        })
+    }
+
     
     render() {
         const expensesList = this.state.expensesList.map(item =>
@@ -86,9 +111,21 @@ class App extends React.Component {
                     </div>
                 </form>
                 <div className="expenses-list-item">
-                        <div>Date</div>
-                        <div>Expense</div>
-                        <div>Sum</div>
+                        <div
+                            onClick={this.handleClickDate}
+                        >
+                            Date
+                        </div>
+                        <div
+                            onClick={this.handleClickExpense}
+                        >
+                            Expense
+                        </div>
+                        <div
+                            onClick={this.handleClickSum}
+                        >
+                            Sum
+                        </div>
                     </div>
                 <div>{expensesList}</div>
             </div>
