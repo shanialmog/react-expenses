@@ -9,13 +9,11 @@ class App extends React.Component {
             date: moment().format("MM/DD/YYYY"),
             expenseName: "",
             expenseSum: "",
-            expensesList: []
+            expensesList: [],
+            sortBy: "date"
         }
         this.handleFormChange = this.handleFormChange.bind(this)
         this.handleFormSubmit = this.handleFormSubmit.bind(this)
-        this.handleClickSum = this.handleClickSum.bind(this)
-        this.handleClickExpense = this.handleClickExpense.bind(this)
-        this.handleClickDate = this.handleClickDate.bind(this)
     }
     
     handleFormChange(event) {
@@ -44,28 +42,21 @@ class App extends React.Component {
             expenseSum: "",
         })
     }
+
+    sortExpensesBy = (columnName) => () => {
+        let expensesList
+        if (columnName === "expense") {
+            expensesList = this.state.expensesList.sort((a, b) => a.name.toUpperCase() === b.name.toUpperCase() ? 0 : ((a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1))
+        } else if (columnName === "sum") {
+            expensesList = this.state.expensesList.sort((a, b) => a.sum === b.sum ? 0 : ((a.sum > b.sum) ? -1 : 1))
+        } else {
+            expensesList = this.state.expensesList.sort((a, b) => a.date === b.date ? 0 : ((a.date > b.date) ? -1 : 1))
+        }
+        this.setState({
+            expensesList: expensesList, 
+        })
+    }
     
-    handleClickSum(event) {
-        const expensesList = this.state.expensesList.sort((a, b) => a.sum === b.sum ? 0 : ((a.sum > b.sum) ? -1 : 1))
-        this.setState({
-            expensesList: expensesList,
-        })
-    }
-
-    handleClickExpense(event) {
-        const expensesList = this.state.expensesList.sort((a, b) => a.name.toUpperCase() === b.name.toUpperCase() ? 0 : ((a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1))
-        this.setState({
-            expensesList: expensesList,
-        })
-    }
-
-    handleClickDate(event) {
-        const expensesList = this.state.expensesList.sort((a, b) => a.date === b.date ? 0 : ((a.date > b.date) ? -1 : 1))
-        this.setState({
-            expensesList: expensesList,
-        })
-    }
-
     
     render() {
         const expensesList = this.state.expensesList.map(item =>
@@ -112,17 +103,17 @@ class App extends React.Component {
                 </form>
                 <div className="expenses-list-item">
                         <div
-                            onClick={this.handleClickDate}
+                            onClick={this.sortExpensesBy("date")}
                         >
                             Date
                         </div>
                         <div
-                            onClick={this.handleClickExpense}
+                            onClick={this.sortExpensesBy("expense")}
                         >
                             Expense
                         </div>
                         <div
-                            onClick={this.handleClickSum}
+                            onClick={this.sortExpensesBy("sum")}
                         >
                             Sum
                         </div>
