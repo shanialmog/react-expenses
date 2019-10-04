@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import './App.css'
 import moment from 'moment'
 
-class App extends React.Component {
+class App extends Component {
     constructor() {
         super()
         this.state = {
@@ -10,7 +10,7 @@ class App extends React.Component {
             expenseName: "",
             expenseSum: "",
             expensesList: [],
-            sortBy: "date"
+            sortBy: ""
         }
         this.handleFormChange = this.handleFormChange.bind(this)
         this.handleFormSubmit = this.handleFormSubmit.bind(this)
@@ -27,22 +27,26 @@ class App extends React.Component {
         event.preventDefault()
         const newDate = moment(this.state.date).format('MM/DD/YYYY')
         const expensesList = [
-                {
-                    date: newDate,
-                    name: this.state.expenseName,
-                    sum: Number(this.state.expenseSum)
-                },
-                ...this.state.expensesList
-            ]
-        expensesList.sort((a, b) => a.date === b.date ? 0 : ((a.date > b.date) ? -1 : 1))
+            {
+                date: newDate,
+                name: this.state.expenseName,
+                sum: Number(this.state.expenseSum)
+            },
+            ...this.state.expensesList
+        ]
         this.setState({
             expensesList: expensesList,
             date: moment().format("MM/DD/YYYY"),
             expenseName: "",
             expenseSum: "",
+        }, () => {
+            // this.sortExpensesBy("date")()
+            //or:
+            const sortByDate = this.sortExpensesBy(this.state.sortBy)
+            sortByDate()
         })
     }
-
+    
     sortExpensesBy = (columnName) => () => {
         let expensesList
         if (columnName === "expense") {
@@ -53,14 +57,15 @@ class App extends React.Component {
             expensesList = this.state.expensesList.sort((a, b) => a.date === b.date ? 0 : ((a.date > b.date) ? -1 : 1))
         }
         this.setState({
-            expensesList: expensesList, 
+            expensesList: expensesList,
+            sortBy: columnName
         })
     }
     
     
     render() {
         const expensesList = this.state.expensesList.map(item =>
-          <div className="expenses-list-item">
+          <div key={item.date+item.name+item.sum} className="expenses-list-item">
             <div>{item.date}</div>
             <div>{item.name}</div>
             <div>{item.sum}</div>
