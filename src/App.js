@@ -10,7 +10,7 @@ class App extends Component {
             expenseName: "",
             expenseSum: "",
             expensesList: [],
-            sortBy: ""
+            sortBy: "date"
         }
         this.handleFormChange = this.handleFormChange.bind(this)
         this.handleFormSubmit = this.handleFormSubmit.bind(this)
@@ -108,16 +108,20 @@ class App extends Component {
                 </form>
                 <div className="expenses-list-item">
                         <div
+                            className ={this.state.sortBy === "date" ? "sortedColumn" : ""}
+                            //{this.state.sortBy === "date" ? className = "sortedColumn" : className = ""}
                             onClick={this.sortExpensesBy("date")}
                         >
                             Date
                         </div>
                         <div
+                            className ={this.state.sortBy === "expense" ? "sortedColumn" : ""}
                             onClick={this.sortExpensesBy("expense")}
                         >
                             Expense
                         </div>
                         <div
+                            className ={this.state.sortBy === "sum" ? "sortedColumn" : ""}
                             onClick={this.sortExpensesBy("sum")}
                         >
                             Sum
